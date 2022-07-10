@@ -23,10 +23,6 @@ echo ===========================================================
 ping -c1 google.com && startinstall=y || echo Failure!
 echo ""
 
-echo The script will partition you /dev/sda drive and format it !WARNING! all will be lost so you better be sure before continuing. You have been warned!...
-echo ================================================================================
-sleep 5 
-
 export startinstall
 
 # now check if $startinstall is "y"
@@ -34,7 +30,7 @@ if [ "$startinstall" = "y" ]; then
 
   # Partitioning of the /dev/sda drive
 
-  sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk /dev/sda
+  sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | sudo fdisk /dev/sda
   o # clear the in memory partition table
   n # new partition
   p # primary partition
@@ -61,15 +57,19 @@ sudo mount /dev/sda2 /mnt
 sudo mkdir /mnt/boot
 sudo mount /dev/sda1 /mnt/boot
 
+# speeding up base install with paralel downloads
+sudo echo "ParallelDownloads = 5" >> /etc/pacman.conf
+
 echo Now basestrapping the system ...
 sleep 2 
 sudo basestrap /mnt base base-devel runit elogind-runit linux linux-firmware glibc nano
 echo ===========================================================
-sleep 1
+sleep 2
 
 echo Now Generating the fstab file for mountpoints ...
 echo ===========================================================
-sleep 3
+sleep 2
+
 # generate fstab for filesystem mounts
 sudo touch /mnt/etc/fstab
 sudo chmod 777 /mnt/etc/fstab

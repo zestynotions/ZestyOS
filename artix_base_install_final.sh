@@ -50,7 +50,7 @@ echo adding the hostname to the hosts file
 sudo echo "127.0.0.1 localhost" > /etc/hosts
 sudo echo "::1 localhost" >> /etc/hosts
 sudo echo "127.0.0.1 $mname.local $mname" >> /etc/hosts
-
+sudo echo "ParallelDownloads = 5" >> /etc/pacman.conf
 
 # add Wheel to sudo file
 sudo echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers
