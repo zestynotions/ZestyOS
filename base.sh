@@ -35,7 +35,7 @@ if [ "$startinstall" = "y" ]; then
 
   # Partitioning of the /dev/sda drive
 
-  sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk /dev/sda
+  sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | sudo fdisk /dev/sda
   o # clear the in memory partition table
   n # new partition
   p # primary partition
