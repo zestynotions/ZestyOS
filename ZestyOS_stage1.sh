@@ -57,18 +57,9 @@ sudo mount /dev/sda2 /mnt
 sudo mkdir /mnt/boot
 sudo mount /dev/sda1 /mnt/boot
 
-# speeding up base install with paralel downloads
-sudo echo "ParallelDownloads = 5" >> /etc/pacman.conf
-
 echo Now basestrapping the system ...
-sleep 2 
 sudo basestrap /mnt base base-devel runit elogind-runit linux linux-firmware glibc nano
-echo ===========================================================
-sleep 2
-
 echo Now Generating the fstab file for mountpoints ...
-echo ===========================================================
-sleep 2
 
 # generate fstab for filesystem mounts
 sudo touch /mnt/etc/fstab
@@ -87,8 +78,8 @@ echo ""
 clear
 
 # prep rc.local to set static IP
+echo ""
 echo Time to add a network configuration, we will assume dhcp but you can change the /etc/rc.local later if you want it to be static.
-sleep 3
 ip link
 echo ""
 echo Add the name of your network adaptor e.g. "enp0s3" for virtualbox machines and likely "eth0" for normal lan.
@@ -105,7 +96,7 @@ sudo echo "dhcpcd $netname" >> /mnt/etc/rc.local
 
 # reminder for after chroot action
 echo =============================================================================
-echo -e "Type \e[1;32m sh artix_final.sh \e[0m"
+echo -e "Type \e[1;32m sh ZestyOS_stage2.sh \e[0m"
 echo =============================================================================
 sleep 3
 # change root environtment

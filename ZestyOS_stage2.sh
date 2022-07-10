@@ -11,7 +11,7 @@ echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 echo "ja_JP.UTF-8 UTF-8" >> /etc/locale.gen
 locale-gen
 
-
+sudo sed -i -e 's/#ParallelDownloads/ParallelDownloads/g' /etc/pacman.conf
 # install bootloader
 pacman -Sq grub os-prober efibootmgr --needed --noconfirm
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub
