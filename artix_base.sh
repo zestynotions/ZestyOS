@@ -16,20 +16,53 @@ if [ "$(id -u)" = 0 ]; then
     echo "##################################################################"
     exit 1
 fi
-echo The script will assume you have your boot and root disk mounted and formatted...
-echo ================================================================================
-sleep 3
+
 echo ""
 echo will quickly check your network connection ...
 echo ===========================================================
 ping -c1 google.com && startinstall=y || echo Failure!
 echo ""
+
+echo The script will partition you /dev/sda drive and format it !WARNING! all will be lost so you better be sure before continuing. You have been warned!...
+echo ================================================================================
+sleep 5 
+
 export startinstall
 
 # now check if $startinstall is "y"
 if [ "$startinstall" = "y" ]; then
+
+  # Partitioning of the /dev/sda drive
+
+  sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk /dev/sda
+  o # clear the in memory partition table
+  n # new partition
+  p # primary partition
+  1 # partition number 1
+    # default - start at beginning of disk 
+  +300M # 100 MB boot parttion
+  n # new partition
+  p # primary partition
+  2 # partion number 2
+    # default, start immediately after preceding partition
+    # default, extend partition to end of disk
+  a # make a partition bootable
+  1 # bootable partition is partition 1 -- /dev/sda1
+  p # print the in-memory partition table
+  w # write the partition table
+  q # and we're done
+EOF
+
+# Formatting the new partiotions
+sudo mkfs.fat -F 32 /dev/sda1
+sudo fatlabel /dev/sda1 BOOT
+sudo mkfs.f2fs -l ROOT /dev/sda2 
+sudo mount /dev/sda2 /mnt
+sudo mkdir /mnt/boot
+sudo mount /dev/sda1 /mnt/boot
+
 echo Now basestrapping the system ...
-sleep 3
+sleep 2 
 sudo basestrap /mnt base base-devel runit elogind-runit linux linux-firmware glibc nano
 echo ===========================================================
 sleep 1
