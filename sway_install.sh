@@ -14,7 +14,7 @@ echo ""
 sudo pacman -Syu --noconfirm --needed
 
 # List apps to install
-APPS="ttf-fira-code figlet neovim ttf-nerd-fonts-symbols imv sway xorg-xwayland alacritty xclip git base-devel wofi"
+APPS="ttf-fira-code figlet ttf-nerd-fonts-symbols imv sway xorg-xwayland alacritty wl-clipboard base-devel wofi"
 
 
 # Install base applications
@@ -44,7 +44,6 @@ echo -----------------------------
 clear 
 
 # Cleanup
-sudo sed -i -e 's/sh ~/sway_install.sh//g' /etc/rc.local
 rm -rf ~/ZestyOS_stage2.sh
 
 echo ""

@@ -60,7 +60,7 @@ sudo echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers
 
 
 # Further installs
-sudo pacman -Sq dhcpcd-runit rsm figlet ttf-fira-code openssh-runit tmux zsh --needed --noconfirm
+sudo pacman -Sq dhcpcd-runit rsm git neovim figlet ttf-fira-code openssh-runit tmux zsh --needed --noconfirm
 
 
 # change the default shell for user
@@ -78,7 +78,6 @@ if [ "$startinstall" = "y" ]; then
   curl -LO https://github.com/zestynotions/ZestyOS/raw/main/sway_install.sh
   sudo chmod 777 sway_install.sh
   sudo cp sway_install.sh /home/$newuser/
-  sudo echo "sh /home/$newuser/sway_install.sh" >> /etc/rc.local
 fi
 
 # # prep rc.local to set static IP
