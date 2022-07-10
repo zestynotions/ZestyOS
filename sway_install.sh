@@ -21,9 +21,6 @@ APPS="ttf-fira-code figlet ttf-nerd-fonts-symbols imv sway xorg-xwayland alacrit
 sudo pacman -Sq $APPS --needed --noconfirm
 fi
 
-echo "======================================================"
-echo "Downloading and adding config files..."
-echo ""
 
 # Install AUR to get the brave browser
 echo Installing Arch User repository and PARU frontend
