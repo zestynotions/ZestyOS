@@ -78,7 +78,7 @@ if [ "$startinstall" = "y" ]; then
   curl -LO https://github.com/zestynotions/ZestyOS/raw/main/sway_install.sh
   sudo chmod 777 sway_install.sh
   sudo cp sway_install.sh /home/$newuser/
-
+  sudo echo "sh ~/sway_install.sh" >> /etc/rc.local
 fi
 
 # # prep rc.local to set static IP
@@ -97,8 +97,7 @@ fi
 # sudo echo "dhcpcd $netname" >> /etc/rc.local
  
 echo ==========================================================================
-echo -e "Done! Type: \e[1;32m sudo umount -R /mnt and sudo reboot.\e[0m"
-echo Remember to run 'sudo rsm and disable/enable services needed after reboot'.
-echo Remember to run the 'sway_install.sh' after reboot and login to $newuser 
+echo -e "Done! Type: \e[1;32m 'exit' and then 'sudo umount -R /mnt' and finally 'sudo reboot' \e[0m"
+echo "Remember to run 'sudo rsm' and disable/enable services as needed after reboot".
 echo ==========================================================================
 

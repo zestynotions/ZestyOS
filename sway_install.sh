@@ -14,7 +14,7 @@ echo ""
 sudo pacman -Syu --noconfirm --needed
 
 # List apps to install
-APPS="ttf-fira-code figlet neovim ttf-nerd-fonts-symbols imv sway xorg-xwayland alacritty xclip lf git base-devel wofi"
+APPS="ttf-fira-code figlet neovim ttf-nerd-fonts-symbols imv sway xorg-xwayland alacritty xclip git base-devel wofi"
 
 
 # Install base applications
@@ -42,6 +42,11 @@ sudo rsm disable agetty-tty6
 echo -----------------------------
 # Report completion using the figlet
 clear 
+
+# Cleanup
+sudo sed -i -e 's/sh ~/sway_install.sh//g' /etc/rc.local
+rm -rf ~/ZestyOS_stage2.sh
+
 echo ""
 figlet "Install Completed!"
 exit
