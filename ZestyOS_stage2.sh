@@ -11,7 +11,9 @@ echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 echo "ja_JP.UTF-8 UTF-8" >> /etc/locale.gen
 locale-gen
 
+# enable parallel downloads in pacman to substansially speed up installs
 sudo sed -i -e 's/#ParallelDownloads/ParallelDownloads/g' /etc/pacman.conf
+
 # install bootloader
 pacman -Sq grub os-prober efibootmgr --needed --noconfirm
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub
@@ -45,19 +47,23 @@ echo -e "\e[1;32m ============================================ \e[0m "
 touch /etc/hostname
 sudo echo $mname > /etc/hostname
 
+
 # populate hosts file
 echo adding the hostname to the hosts file
 sudo echo "127.0.0.1 localhost" > /etc/hosts
 sudo echo "::1 localhost" >> /etc/hosts
 sudo echo "127.0.0.1 $mname.local $mname" >> /etc/hosts
-sudo echo "ParallelDownloads = 5" >> /etc/pacman.conf
+
 
 # add Wheel to sudo file
 sudo echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers
 
-# Further installs
-sudo pacman -Sq dhcpcd-runit rsm btop broot figlet ttf-fira-code lolcat openssh-runit tmux zsh exa duf ripgrep bat --needed --noconfirm
 
+# Further installs
+sudo pacman -Sq dhcpcd-runit rsm figlet ttf-fira-code openssh-runit tmux zsh --needed --noconfirm
+
+
+# change the default shell for user
 sudo echo Changing the default shell to ZSH
 sudo chsh -s /bin/zsh $newuser
 
