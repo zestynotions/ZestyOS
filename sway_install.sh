@@ -4,7 +4,6 @@ echo "WARNING This script will install Sway tiling windows manager, brave browse
 echo "Paru and lastly neovim and will add config files for those, so you better know what you are doing!"
 echo ""
 echo Would you like to install? "(Y or N)"
-
 read swayinstall
 if [ "$swayinstall" = "y" ]; then
 
@@ -16,19 +15,18 @@ sudo pacman -Syu --noconfirm --needed
 # List apps to install
 APPS="ttf-fira-code figlet ttf-nerd-fonts-symbols imv sway xorg-xwayland alacritty wl-clipboard base-devel wofi"
 
-
 # Install base applications
 sudo pacman -Sq $APPS --needed --noconfirm
 fi
 
 # Cleanup install stage 2 file from root dir
-rm -rf /ZestyOS_stage2.sh
+sudo rm -rf /ZestyOS_stage2.sh
 
 # Install AUR to get the brave browser
 echo "Installing Arch User repository and PARU frontend"
 git clone https://aur.archlinux.org/paru-bin.git
 cd paru-bin
-makepkg -sic
+makepkg -si
 paru 
 paru -S pfetch brave-bin btop duf exa broot bat --noconfirm --needed
 
@@ -36,11 +34,6 @@ sudo rsm disable agetty-tty3
 sudo rsm disable agetty-tty4
 sudo rsm disable agetty-tty5
 sudo rsm disable agetty-tty6
-
-
-clear 
-
-
 echo "-----------------------------"
 # Report completion using the figlet
 echo ""
