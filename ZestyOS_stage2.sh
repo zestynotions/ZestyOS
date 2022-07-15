@@ -60,7 +60,7 @@ sudo echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers
 
 
 # Further installs
-sudo pacman -Sq dhcpcd-runit rsm git neovim figlet ttf-fira-code openssh-runit tmux zsh --needed --noconfirm
+sudo pacman -Sq dhcpcd-runit rsm git neovim figlet noto-fonts ttf-fira-code openssh-runit tmux zsh --needed --noconfirm
 
 
 # change the default shell for user
