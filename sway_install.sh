@@ -18,14 +18,14 @@ sudo pacman -Syu --noconfirm --needed
 
 # add .config files
 git clone --depth=1 https://github.com/zestynotions/dotfiles.git
-sudo chmod -R +x ~/dotfiles/*
+sudo chmod -R 777 ~/dotfiles/*
 cp -rf ~/dotfiles/.config ~/
 cp -rf ~/dotfiles/.zshrc ~/
 cp -rf ~/dotfiles/.zshenv ~/
 sudo rm -rf ~/dotfiles
 
 # List apps to install
-APPS="mesa ttf-fira-code imv bat ripgrep sway swaybg xorg-xwayland alacritty wl-clipboard base-devel"
+APPS="mesa sway swaybg ttf-fira-code imv bat ripgrep xorg-xwayland alacritty wl-clipboard base-devel"
 
 # Install base applications
 sudo pacman -Sq $APPS --needed --noconfirm
