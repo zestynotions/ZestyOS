@@ -21,9 +21,11 @@ APPS="ttf-fira-code figlet ttf-nerd-fonts-symbols imv sway xorg-xwayland alacrit
 sudo pacman -Sq $APPS --needed --noconfirm
 fi
 
+# Cleanup install stage 2 file from root dir
+rm -rf /ZestyOS_stage2.sh
 
 # Install AUR to get the brave browser
-echo Installing Arch User repository and PARU frontend
+echo "Installing Arch User repository and PARU frontend"
 git clone https://aur.archlinux.org/paru-bin.git
 cd paru-bin
 makepkg -sic
@@ -36,13 +38,12 @@ sudo rsm disable agetty-tty5
 sudo rsm disable agetty-tty6
 
 
-echo -----------------------------
-# Report completion using the figlet
 clear 
 
-# Cleanup
-rm -rf ~/ZestyOS_stage2.sh
 
+echo "-----------------------------"
+# Report completion using the figlet
 echo ""
 figlet "Install Completed!"
+echo "-----------------------------"
 exit
