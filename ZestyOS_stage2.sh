@@ -26,7 +26,8 @@ sudo echo "Server = https://mirror1.cl.netactuate.com/artix/universe/$arch" >> /
 sudo echo "Server = https://ftp.crifo.org/artix-universe/" >> /etc/pacman.conf
 
 
-# install bootloader
+# update and install bootloader
+pacman -Syu --needed --noconfirm
 pacman -Sq grub os-prober efibootmgr --needed --noconfirm
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub
 grub-mkconfig -o /boot/grub/grub.cfg
