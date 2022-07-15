@@ -6,7 +6,6 @@ ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 # set time
 hwclock --systohc
 
-echo "Setting console keyboard layout"
 sudo echo "KEYMAP=us" > /etc/vconsole.conf 
  
 # generate locales
@@ -17,13 +16,6 @@ locale-gen
 # enable parallel downloads in pacman to substansially speed up installs
 sudo sed -i -e 's/#ParallelDownloads/ParallelDownloads/g' /etc/pacman.conf
 
-sudo echo "[universe]" >> /etc/pacman.conf
-sudo echo "Server = https://universe.artixlinux.org/$arch" >> /etc/pacman.conf
-sudo echo "Server = https://mirror1.artixlinux.org/universe/$arch" >> /etc/pacman.conf
-sudo echo "Server = https://mirror.pascalpuffke.de/artix-universe/$arch" >> /etc/pacman.conf
-sudo echo "Server = https://artixlinux.qontinuum.space/artixlinux/universe/os/$arch" >> /etc/pacman.conf
-sudo echo "Server = https://mirror1.cl.netactuate.com/artix/universe/$arch" >> /etc/pacman.conf
-sudo echo "Server = https://ftp.crifo.org/artix-universe/" >> /etc/pacman.conf
 
 
 # update and install bootloader
