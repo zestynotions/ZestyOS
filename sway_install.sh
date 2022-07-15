@@ -13,15 +13,20 @@ echo ""
 # Update system before application install
 sudo pacman -Syu --noconfirm --needed
 
+# add .config files
+git clone -depth=1 https://github.com/zestynotions/dotfiles.git
+sudo chmod -R +x ~/dotfiles/*
+cp -rf ~/dotfiles/.config ~/
+cp -rf ~/dotfiles/.zshrc ~/
+cp -rf ~/dotfiles/.zshenv ~/
+sudo rm -rf ~/dotfiles
+
 # List apps to install
 APPS="mesa ttf-fira-code imv bat ripgrep sway swaybg xorg-xwayland alacritty wl-clipboard base-devel"
 
 # Install base applications
 sudo pacman -Sq $APPS --needed --noconfirm
 fi
-
-# Cleanup install stage 2 file from root dir
-sudo rm -rf /ZestyOS_stage2.sh
 
 # Install AUR to get the brave browser
 echo "Installing Arch User repository and PARU frontend"
@@ -40,4 +45,9 @@ echo "-----------------------------"
 echo ""
 figlet "Install Completed!"
 echo "-----------------------------"
+
+# Cleanup install stage 2 file from root dir
+sudo rm -rf /ZestyOS_stage2.sh
+sudo rm rb sway_install.sh 
+
 exit

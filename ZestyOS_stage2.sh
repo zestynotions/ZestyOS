@@ -69,15 +69,6 @@ sudo ln -s /etc/runit/sv/chrony /run/runit/service/
 sudo sv start chrony
 
 
-# add .config files
-git clone -depth=1 https://github.com/zestynotions/dotfiles.git
-sudo chmod -R +x ~/dotfiles/*
-cp -rf ~/dotfiles/.config ~/
-cp -rf ~/dotfiles/.zshrc ~/
-cp -rf ~/dotfiles/.zshenv ~/
-sudo rm -rf ~/dotfiles
-
-
 # Further installs - apps
 sudo pacman -Sq git neovim tmux zsh figlet noto-fonts ttf-fira-code --needed --noconfirm
 
