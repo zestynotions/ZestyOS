@@ -96,7 +96,7 @@ sudo echo "dhcpcd $netname" >> /mnt/etc/rc.local
 
 # reminder for after chroot action
 echo =============================================================================
-echo -e "Type \e[1;32m sh ZestyOS_stage2.sh \e[0m"
+echo -e "Please Type \e[1;32m sh ZestyOS_stage2.sh \e[0m"
 echo =============================================================================
 sleep 3
 # change root environtment

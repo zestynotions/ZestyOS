@@ -6,6 +6,9 @@ ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 # set time
 hwclock --systohc
 
+echo "Setting console keyboard layout"
+sudo echo "KEYMAP=us" > /etc/vconsole.conf 
+ 
 # generate locales
 echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 echo "ja_JP.UTF-8 UTF-8" >> /etc/locale.gen
@@ -65,6 +68,16 @@ sudo mkdir /run/runit/service
 sudo ln -s /etc/runit/sv/chrony /run/runit/service/
 sudo sv start chrony
 
+
+# add .config files
+git clone -depth=1 https://github.com/zestynotions/dotfiles.git
+sudo chmod -R +x ~/dotfiles/*
+cp -rf ~/dotfiles/.config ~/
+cp -rf ~/dotfiles/.zshrc ~/
+cp -rf ~/dotfiles/.zshenv ~/
+sudo rm -rf ~/dotfiles
+
+
 # Further installs - apps
 sudo pacman -Sq git neovim tmux zsh figlet noto-fonts ttf-fira-code --needed --noconfirm
 
@@ -72,9 +85,9 @@ sudo pacman -Sq git neovim tmux zsh figlet noto-fonts ttf-fira-code --needed --n
 sudo echo Changing the default shell to ZSH
 sudo chsh -s /bin/zsh $newuser
 
-echo -e "\e[1;32m ============================================ \e[0m "
+echo -e "\e[1;32m ==================================================================== \e[0m "
 echo Would you like to also install Sway Wayland tiling windows manager? "(Y or N)"
-echo -e "\e[1;32m ============================================ \e[0m "
+echo -e "\e[1;32m ==================================================================== \e[0m "
 
 read startinstall
 # now check if $startinstall is "y"
@@ -85,23 +98,7 @@ if [ "$startinstall" = "y" ]; then
   sudo cp sway_install.sh /home/$newuser/
 fi
 
-# # prep rc.local to set static IP
-# echo Time to add a network configuration, we will assume dhcp but you can change the /etc/rc.local later if you want it to be static.
-# sleep 1
-# ip link
-# echo ""
-# echo Add the name of your network adaptor e.g. "enp0s3" for virtualbox machines.
-# echo -e "\e[1;32m ============================================ \e[0m "
-# read -p 'Name of network adaptor: ' netname
-# echo -e "\e[1;32m ============================================ \e[0m "
-# sudo chmod 777 /etc/rc.local
-# sudo echo "#ip link set $netname up" >> /etc/rc.local
-# sudo echo "#ip addr add your_ip_here/24 brd + dev $netname" >> /etc/rc.local
-# sudo echo "#ip route add default via router_ip_here" >> /etc/rc.local
-# sudo echo "dhcpcd $netname" >> /etc/rc.local
- 
 echo ==========================================================================
-echo -e "Done! Type: \e[1;32m 'exit' and then 'sudo umount -R /mnt' and finally 'sudo reboot' \e[0m"
-echo "Remember to run 'sudo rsm' and disable/enable services as needed after reboot".
+echo -e "Done! Please Type: \e[1;32m 'exit' and then 'sudo reboot' \e[0m"
 echo ==========================================================================
 
