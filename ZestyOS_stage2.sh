@@ -65,8 +65,6 @@ sudo echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers
 # Further installs - services
 sudo pacman -Sq rsm cronie-runit chrony-runit dhcpcd-runit openssh-runit --needed --noconfirm
 sudo mkdir /run/runit/service
-sudo ln -s /etc/runit/sv/chrony /run/runit/service/
-sudo sv start chrony
 
 
 # Further installs - apps
