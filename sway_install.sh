@@ -5,6 +5,7 @@ echo "Paru and lastly neovim and will add config files for those, so you better 
 echo ""
 sudo ln -s /etc/runit/sv/chrony /run/runit/service/
 sudo sv start chrony
+sleep 3
 echo "==============================================="
 echo Would you like to install? "(Y or N)"
 echo "==============================================="
@@ -14,13 +15,13 @@ if [ "$swayinstall" = "y" ]; then
 echo "Updating system and packages ahead of install..."
 echo ""
 # Update system before application install
-sudo echo "[universe]" >> /etc/pacman.conf
-sudo echo "Server = https://universe.artixlinux.org/$arch" >> /etc/pacman.conf
-sudo echo "Server = https://mirror1.artixlinux.org/universe/$arch" >> /etc/pacman.conf
-sudo echo "Server = https://mirror.pascalpuffke.de/artix-universe/$arch" >> /etc/pacman.conf
-sudo echo "Server = https://artixlinux.qontinuum.space/artixlinux/universe/os/$arch" >> /etc/pacman.conf
-sudo echo "Server = https://mirror1.cl.netactuate.com/artix/universe/$arch" >> /etc/pacman.conf
-sudo echo "Server = https://ftp.crifo.org/artix-universe/" >> /etc/pacman.conf
+sudo echo "# Arch repos" >> /etc/pacman.conf
+sudo echo "[extra]" >> /etc/pacman.conf
+sudo echo "Include = /etc/pacman.d/mirrorlist-arch" >> /etc/pacman.conf
+sudo echo "[community]" >> /etc/pacman.conf
+sudo echo "Include = /etc/pacman.d/mirrorlist-arch" >> /etc/pacman.conf
+sudo echo "[multilib]" >> /etc/pacman.conf
+sudo echo "Include = /etc/pacman.d/mirrorlist-arch" >> /etc/pacman.conf
 
 sudo pacman -Syu --noconfirm --needed
 
