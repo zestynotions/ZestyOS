@@ -61,7 +61,7 @@ sudo echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers
 
 # Further installs
 sudo pacman -Sq cronie-runit chrony-runit dhcpcd-runit rsm git neovim figlet noto-fonts ttf-fira-code openssh-runit tmux zsh --needed --noconfirm
-sudo ln -s /etc/runit/sv/chrony /run/runit/service/chrony
+sudo ln -s /etc/runit/sv/chrony /run/runit/service/
 
 # change the default shell for user
 sudo echo Changing the default shell to ZSH
