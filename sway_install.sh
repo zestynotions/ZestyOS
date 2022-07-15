@@ -13,7 +13,7 @@ echo ""
 sudo pacman -Syu --noconfirm --needed
 
 # List apps to install
-APPS="ttf-fira-code figlet ttf-nerd-fonts-symbols imv sway xorg-xwayland alacritty wl-clipboard base-devel wofi"
+APPS="mesa ttf-fira-code figlet ttf-nerd-fonts-symbols imv sway xorg-xwayland alacritty wl-clipboard base-devel"
 
 # Install base applications
 sudo pacman -Sq $APPS --needed --noconfirm
@@ -28,7 +28,7 @@ git clone https://aur.archlinux.org/paru-bin.git
 cd paru-bin
 makepkg -si
 paru 
-paru -S pfetch brave-bin btop duf exa broot bat --noconfirm --needed
+paru -S pfetch-btw wofi-hg brave-bin btop duf exa bat --noconfirm --needed
 
 sudo rsm disable agetty-tty3
 sudo rsm disable agetty-tty4
