@@ -61,7 +61,8 @@ sudo echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers
 
 # Further installs
 sudo pacman -Sq cronie-runit ntp-runit dhcpcd-runit rsm git neovim figlet noto-fonts ttf-fira-code openssh-runit tmux zsh --needed --noconfirm
-sudo ln -s /etc/runit/sv/ntp-runit /run/runit/ntp-runit/
+sudo ln -s /etc/runit/sv/ntp-runit /run/runit/ntp-runit
+sudo sv start ntp-runit
 
 # change the default shell for user
 sudo echo Changing the default shell to ZSH
