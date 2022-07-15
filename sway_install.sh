@@ -3,6 +3,7 @@
 echo "WARNING This script will install Sway tiling windows manager, brave browser and Arch user repo through"
 echo "Paru and lastly neovim and will add config files for those, so you better know what you are doing!"
 echo ""
+sudo sv start chrony
 echo Would you like to install? "(Y or N)"
 read swayinstall
 if [ "$swayinstall" = "y" ]; then
@@ -13,7 +14,7 @@ echo ""
 sudo pacman -Syu --noconfirm --needed
 
 # List apps to install
-APPS="mesa ttf-fira-code figlet ttf-nerd-fonts-symbols imv sway xorg-xwayland alacritty wl-clipboard base-devel"
+APPS="mesa ttf-fira-code imv bat ripgrep sway swaybg xorg-xwayland alacritty wl-clipboard base-devel"
 
 # Install base applications
 sudo pacman -Sq $APPS --needed --noconfirm
@@ -28,7 +29,7 @@ git clone https://aur.archlinux.org/paru-bin.git
 cd paru-bin
 makepkg -si
 paru 
-paru -S pfetch-btw wofi-hg brave-bin btop duf exa bat --noconfirm --needed
+paru -S pfetch-btw wofi-hg brave-bin btop duf exa --noconfirm --needed
 
 sudo rsm disable agetty-tty3
 sudo rsm disable agetty-tty4

@@ -59,10 +59,14 @@ sudo echo "127.0.0.1 $mname.local $mname" >> /etc/hosts
 sudo echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers
 
 
-# Further installs
-sudo pacman -Sq rsm cronie-runit chrony-runit dhcpcd-runit git neovim figlet noto-fonts ttf-fira-code openssh-runit tmux zsh --needed --noconfirm
+# Further installs - services
+sudo pacman -Sq rsm cronie-runit chrony-runit dhcpcd-runit openssh-runit --needed --noconfirm
 sudo mkdir /run/runit/service
 sudo ln -s /etc/runit/sv/chrony /run/runit/service/
+sudo sv start chrony
+
+# Further installs - apps
+sudo pacman -Sq git neovim tmux zsh figlet noto-fonts ttf-fira-code --needed --noconfirm
 
 # change the default shell for user
 sudo echo Changing the default shell to ZSH
