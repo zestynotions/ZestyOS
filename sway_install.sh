@@ -1,12 +1,13 @@
 #!/bin/bash
-
+echo ""
 echo "WARNING This script will install Sway tiling windows manager, brave browser and Arch user repo through"
 echo "Paru and lastly neovim and will add config files for those, so you better know what you are doing!"
 echo ""
 sudo ln -s /etc/runit/sv/chrony /run/runit/service/
 sudo sv start chrony
-
+echo "==============================================="
 echo Would you like to install? "(Y or N)"
+echo "==============================================="
 read swayinstall
 if [ "$swayinstall" = "y" ]; then
 
@@ -16,7 +17,7 @@ echo ""
 sudo pacman -Syu --noconfirm --needed
 
 # add .config files
-git clone -depth=1 https://github.com/zestynotions/dotfiles.git
+git clone --depth=1 https://github.com/zestynotions/dotfiles.git
 sudo chmod -R +x ~/dotfiles/*
 cp -rf ~/dotfiles/.config ~/
 cp -rf ~/dotfiles/.zshrc ~/
