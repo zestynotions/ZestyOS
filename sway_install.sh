@@ -34,7 +34,7 @@ cp -rf ~/dotfiles/.zshenv ~/
 sudo rm -rf ~/dotfiles
 
 # List apps to install
-APPS="mesa sway swaybg ttf-fira-code imv bat ripgrep xorg-xwayland alacritty wl-clipboard base-devel"
+APPS="mesa sway swaybg ttf-fira-code imv bat ripgrep xorg-xwayland alacritty wl-clipboard polkit"
 
 # Install base applications
 sudo pacman -Sq $APPS --needed --noconfirm
