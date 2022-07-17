@@ -17,7 +17,7 @@ iface eth0 inet dhcp
     hostname ZestyAlpine
 "
 
-#DNSOPTS="1.1.1.1"
+DNSOPTS="-d zns.one 1.1.1.1"
 
 TIMEZONEOPTS="Asia/Tokyo"
 
@@ -27,7 +27,7 @@ PROXYOPTS=none
 APKREPOSOPTS="-1"
 
 # Create admin user
-# USEROPTS="-a -g wheel,audio,video,netdev zns"
+USEROPTS="-a -u -g wheel,audio,video,netdev zns zns"
 
 SSHDOPTS=openssh
 
