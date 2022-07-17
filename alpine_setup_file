@@ -2,7 +2,7 @@
 
 KEYMAPOPTS="us us"
 
-HOSTNAMEOPTS=ZestyAlpine
+HOSTNAMEOPTS=zestyalpine
 
 DEVDOPTS=mdev
 
