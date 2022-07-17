@@ -27,9 +27,9 @@ PROXYOPTS=none
 APKREPOSOPTS="-1"
 
 # Create admin user
-USEROPTS="-a -u -g wheel,audio,video,netdev zns zns"
+# USEROPTS="-a -u -g wheel,audio,video,netdev zns zns"
 
-SSHDOPTS=openssh
+SSHDOPTS="-c openssh"
 
 NTPOPTS="chrony"
 

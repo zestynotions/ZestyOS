@@ -1,8 +1,19 @@
 #!/bin/sh
 echo ""
-echo "Welcome to ZestyOS installer"
+echo "===================================="
+echo "=== Welcome to ZestyOS installer ==="
+echo "===================================="
 echo ""
-ping -c3 google.com
+ping -c1 google.com
 wget https://raw.githubusercontent.com/zestynotions/ZestyOS/main/alpine_setup_file
 setup-alpine -f alpine_setup_file
+
+echo "==============================="
+
+echo "Reboting in ..3 sec" 
+sleep 1
+echo "Reboting in ..2 sec" 
+sleep 1
+echo "Reboting in ..1 sec" 
+sleep 1
 reboot
