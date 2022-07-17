@@ -2,7 +2,7 @@
 
 KEYMAPOPTS="us us"
 
-HOSTNAMEOPTS=zestyalpine
+HOSTNAMEOPTS=zesty
 
 DEVDOPTS=mdev
 
@@ -27,7 +27,7 @@ PROXYOPTS=none
 APKREPOSOPTS="-1"
 
 # Create admin user
-USEROPTS="-a -g wheel,audio,video,netdev zns"
+# USEROPTS="-a -g wheel,audio,video,netdev zns"
 
 SSHDOPTS=openssh
 
