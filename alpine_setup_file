@@ -11,13 +11,13 @@ INTERFACESOPTS="auto lo
 iface lo inet loopback
 
 auto eth0
-iface eth0 inet static
-    address 10.0.0.99/24
-    gateway 10.0.0.1
+iface eth0 inet dhcp
+#    address 10.0.0.99/24
+#    gateway 10.0.0.1
     hostname ZestyAlpine
 "
 
-DNSOPTS="1.1.1.1"
+#DNSOPTS="1.1.1.1"
 
 TIMEZONEOPTS="Asia/Tokyo"
 
