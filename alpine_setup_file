@@ -17,8 +17,7 @@ iface eth0 inet static
     hostname ZestyAlpine
 "
 
-# Search domain of example.com, Google public nameserver
-# DNSOPTS="-d example.com 8.8.8.8"
+DNSOPTS="1.1.1.1"
 
 TIMEZONEOPTS="Asia/Tokyo"
 
@@ -28,7 +27,7 @@ PROXYOPTS=none
 APKREPOSOPTS="-1"
 
 # Create admin user
-USEROPTS="-a -u -g audio,video,netdev zns"
+USEROPTS="-a -g wheel,audio,video,netdev zns"
 
 SSHDOPTS=openssh
 
