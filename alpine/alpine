@@ -1,0 +1,42 @@
+# ZestyAlpine Setup file for easy/fast Install
+
+KEYMAPOPTS="us us"
+
+HOSTNAMEOPTS="zestyos"
+
+DEVDOPTS="mdev"
+
+# Contents of /etc/network/interfaces
+INTERFACESOPTS="auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet dhcp
+
+### Uncomment below for fixed IP
+#  iface eth0 inet static
+#  address 10.0.0.199
+#  netmask 255.255.255.0
+#  gateway 10.0.0.1
+"
+
+DNSOPTS="1.1.1.1"
+
+TIMEZONEOPTS="Asia/Tokyo"
+
+PROXYOPTS=none
+
+# Add first mirror (CDN)
+APKREPOSOPTS="-1"
+
+USEROPTS=none
+
+SSHDOPTS="openssh"
+
+NTPOPTS="chrony"
+
+DISKOPTS="-m sys"
+
+LBUOPTS=none
+
+APKCACHEOPTS=none
