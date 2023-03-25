@@ -1,10 +1,12 @@
 # ZestyOS
 
 2023-03-25
-A new year, a new distribution!
-These days I'm on Alpine Linux and quite happy. It is outragiously fast and responsive and using the OpenRC init system over Systemd. Go and check it out here: Alpine Linux '
+### ZestyOS a.k.k "RustyAlpine"
 
-It is also super fast to install and often the preferred OS for containers, this also means it has a few restrictions but if you change the default shell from ash to zsh and use the edge repositories you can have a really good experience. (Disclaimer: I only use it for server and no-audio desktop environtment, but I see no reason why it would not be great for any usecase really)
+A new year, a new distribution!
+These days I'm on Alpine Linux and quite happy. It is outragiously fast and responsive and using the OpenRC init system over Systemd. Go and check it out here: AlpineLinux.org
+
+It is also super fast to install and often the preferred OS for containers, this also means it has a few restrictions but if you change the default shell from ash to zsh and use the edge repositories you can have a really good experience. (Disclaimer: I only use it for server and no-audio desktop environtment, but I see no reason why it would not be great for any use case really)
 Once the ISO boots you login with root (no password) and type: "setup-alpine" and follow the prompts.
 
 OR you can do like me and script/use a setup file for the install.
@@ -12,18 +14,21 @@ OR you can do like me and script/use a setup file for the install.
 setup-alpine -f https://zestynotions.com/alpine
 ```
 
-This will install the sytem for you with sane defaults, and only prompt you for which harddrive to install to. (It will however assume you are in Asia/Tokyo timezone, and using us keyboard with dhcp for your network, but these cna of course be easily changed later as needed under /etc )
+This will install the system for you with sane defaults, and only prompt you for which hard drive to install to. 
+(It will however assume you are in Asia/Tokyo timezone, and using us keyboard with dhcp for your network, but these cna of course be easily changed later as needed under /etc )
 
-Once install finish, reboot and login with the root user and the password created during setup. Then run the following command to install a user, use edge and community repoes as well as install rust tool chain and zsh and finally it will pull my dotfiles.
+Once the install finish, reboot and login with the root user and the password created during setup. Then run the following command to install a user, use edge and community repoes as well as install rust tool chain and zsh and finally it will pull my dotfiles.
 
 ```code 
 sh <(wget -qO- https://zestynotions/zestyos)
 ```
 
+
+# Artix
 Install script for Artix linux with option to clone my .configs at the end. 
 The intention is to have a minimal Artix install with Sway tiling windows manager.
 
-#### Artix Linux is a fast arch based linux distro but without the systemd dependency
+#### Artix Linux is a fast arch based linux distro without the systemd dependency
 Please grab their minimal install iso from here: https://artixlinux.org/
 
 
