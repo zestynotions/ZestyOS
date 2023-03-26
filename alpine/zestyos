@@ -2,7 +2,7 @@
 
 echo ""
 echo "============================================="
-echo "============ Welcome to =====================" 
+echo "============ Welcome to ====================="
 echo "  _____         _          ___  ____         "
 echo " |__  /___  ___| |_ _   _ / _ \/ ___|        "
 echo "   / // _ \/ __| __| | | | | | \___ \        "
@@ -21,25 +21,23 @@ echo ""
 read newuser
 
 ## activate community repo
-echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositories
-echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
-echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >/etc/apk/repositories
+echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >>/etc/apk/repositories
+echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >>/etc/apk/repositories
 
 ## Enabling startup of servicves to happen in parralel
-echo 'rc_parallel="YES"' >> /etc/rc.conf
+echo 'rc_parallel="YES"' >>/etc/rc.conf
 
 ## set motd
-echo "Welcome to $(hostname)!" > /etc/motd
+echo "Welcome to $(hostname)!" >/etc/motd
 
-
-apk -U upgrade && \
-apk add libuser doas git curl zsh bat exa htop neovim seatd eudev 
-
+apk -U upgrade &&
+	apk add libuser doas git curl zsh bat exa htop neovim seatd eudev
 
 touch /etc/login.defs
 mkdir /etc/default
 touch /etc/default/useradd
-echo "permit persist :wheel" >> /etc/doas.d/doas.conf
+echo "permit persist :wheel" >>/etc/doas.d/doas.conf
 
 ## add user
 echo "=========================================="
@@ -55,10 +53,9 @@ rc-update add seatd
 rc-service seatd start
 adduser $newuser seat
 
-
 touch /home/$newuser/.zshrc
 chmod 777 /home/$newuser/.zshrc
-echo "sh <(wget -qO- https://zestynotions.com/zestyos_finish)" > /home/$newuser/.zshrc
+echo "sh <(wget -qO- https://raw.githubusercontent.com/zestynotions/ZestyOS/main/alpine/zestyos_finish)" >/home/$newuser/.zshrc
 
 echo "================================================================="
 echo "========= Log in with your new User account after reboot ========"
@@ -75,5 +72,3 @@ sleep 1
 echo "1"
 sleep 1
 reboot
-
-
