@@ -11,16 +11,16 @@ Once the ISO boots you login with root (no password) and type: "setup-alpine" an
 
 OR you can do like me and script/use a setup file for the install.
 ```code
-setup-alpine -f https://zestynotions.com/alpine
+setup-alpine -f https://zns.one/alpine
 ```
 
 This will install the system for you with sane defaults, and only prompt you for which hard drive to install to. 
 (It will however assume you are in Asia/Tokyo timezone, and using us keyboard with dhcp for your network, but these can of course be easily changed later as needed under /etc )
 
-Once the install finish, reboot and login with the root user and the password created during setup. Then run the following command to install a user, use edge and community repoes as well as install rust tool chain and zsh and finally it will pull my dotfiles.
+Once the install finish, reboot and login with the root user and the password created during setup. Then run the following command to install a user, use edge and community repo's as well as install rust tool chain and zsh and finally it will pull my dotfiles.
 
 ```code 
-sh <(wget -qO- https://zestynotions/zestyos)
+sh <(wget -qO- https://zns.one/zestyos)
 ```
 
 
