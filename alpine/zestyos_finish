@@ -24,7 +24,6 @@ doas apk add autotiling zoxide fd skim starship swayr ripgrep procs macchina tea
 doas apk add build-base
 # gcc rustup
 # rustup-init -y
-https://raw.githubusercontent.com/zestynotions/dotfiles/master/.config/rc)
 echo "sh <(wget -qO- https://raw.githubusercontent.com/zestynotions/dotfiles/master/.config/rc)" > ~/.zshrc
 
 echo "All done! rebooting in "
