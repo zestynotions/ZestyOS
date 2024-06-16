@@ -20,9 +20,9 @@ echo "===== Install Windows manager and tools ====="
 echo "============================================="
 doas apk update
 doas apk add mesa-dri-gallium sway
-doas apk add autotiling zoxide fd skim starship swayr ripgrep zellij gitui procs bottom macchina tealdeer alacritty xwayland wofi swaybg wl-clipboard font-fira-mono-nerd font-fira-code-nerd
-doas apk add build-base gcc rustup
-rustup-init -y
+doas apk add autotiling zoxide fd skim starship swayr ripgrep zellij gitui procs bottom macchina tealdeer alacritty xwayland wofi swaybg wl-clipboard font-jetbrain-mono font-jetbrain-nerd font-fira-mono-nerd font-fira-code-nerd
+# doas apk add build-base gcc rustup
+# rustup-init -y
 sh <(wget -qO- https://raw.githubusercontent.com/zestynotions/dotfiles/master/.config/rc)
 echo "All done! rebooting in "
 sleep 1
