@@ -20,7 +20,7 @@ echo "===== Install Windows manager and tools ====="
 echo "============================================="
 doas apk update
 doas apk add mesa-dri-gallium sway
-doas apk add autotiling zoxide fd skim starship swayr ripgrep procs macchina tealdeer alacritty xwayland wofi swaybg wl-clipboard font-jetbrains-mono font-jetbrains-nerd font-fira-mono-nerd font-fira-code-nerd
+doas apk add autotiling zoxide fd skim starship swayr ripgrep procs macchina tealdeer alacritty xwayland wofi swaybg wl-clipboard font-jetbrains-mono font-jetbrains-mono-nerd font-fira-mono-nerd font-fira-code-nerd
 doas apk add build-base
 # gcc rustup
 # rustup-init -y
