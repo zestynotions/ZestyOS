@@ -18,7 +18,7 @@ if [ "$startinstall" = "y" ]; then
 	brew update
 
 	# List apps to install
-	APPS="git exa neovim bat alacritty lf btop tmux cask-fonts/font-fira-code cask-fonts/font-fira-code-nerd-font yabai skhd figlet lolcat"
+	APPS="git exa neovim bat alacritty yazi btop tmux cask-fonts/font-fira-code cask-fonts/font-fira-code-nerd-font yabai skhd figlet lolcat"
 	# APPS="git zsh exa bat alacritty btop tmux cask-fonts/font-fira-code cask-fonts/font-fira-mono cask-fonts/font-fira-code-nerd-font figlet lolcat"
 
 	# Install base applications
