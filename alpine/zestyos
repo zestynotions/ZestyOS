@@ -48,7 +48,7 @@ adduser $newuser wheel
 mkdir -p /home/$newuser
 mkdir -p /home/$newuser/.run
 
-setup-udev
+setup-devd udev
 rc-update add seatd
 rc-service seatd start
 adduser $newuser seat
