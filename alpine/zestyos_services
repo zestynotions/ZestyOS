@@ -11,6 +11,14 @@ set -eu
 INITD=/etc/init.d
 RUNLEVELS=/etc/runlevels
 
+# ANSI colors for the runlevel annotation column. Green = enabled in at
+# least one runlevel; dim = not in any runlevel. Service-name field is
+# left uncolored so `cut -f1` hands rc-service a clean string.
+ESC=$(printf '\033')
+C_ON="${ESC}[32m"
+C_OFF="${ESC}[90m"
+C_RST="${ESC}[0m"
+
 command -v sk >/dev/null 2>&1 || {
 	echo "error: 'sk' (skim) is not installed — apk add skim" >&2
 	exit 1
@@ -85,7 +93,11 @@ annotate() {
 			}
 		')
 		[ -n "$rls" ] || rls="-"
-		printf '%s\t[%s]\n' "$svc" "$rls"
+		if [ "$rls" = "-" ]; then
+			printf '%s\t%s[%s]%s\n' "$svc" "$C_OFF" "$rls" "$C_RST"
+		else
+			printf '%s\t%s[%s]%s\n' "$svc" "$C_ON" "$rls" "$C_RST"
+		fi
 	done
 }
 
@@ -98,7 +110,8 @@ pick_one() {
 # Multi-select picker over annotated service list. Emits one chosen name per
 # line (the [runlevels] column is for display only).
 pick_services() {
-	sk -m --header="$1" --height=60% --reverse --no-mouse --prompt='> ' \
+	sk -m --ansi --header="$1  (green=enabled, dim=off)" \
+		--height=60% --reverse --no-mouse --prompt='> ' \
 		--delimiter='	' --with-nth=1,2 \
 		--preview='rc-service {1} status 2>&1' \
 		--preview-window=down:5 |
@@ -166,8 +179,21 @@ action_del() {
 }
 
 action_show_all() {
+	# rc-status strips colors when piped, so re-apply: started=green,
+	# stopped=red, crashed=yellow. Color confined to the [ ... ] bracket
+	# only — service name in column 1 stays clean for the preview pane.
 	rc-status --servicelist 2>/dev/null |
-		sk --header='all services (read-only — Esc to exit)' \
+		awk '
+			{
+				sub(/\[[ ]*started[ ]*\]/,  "\033[32m&\033[0m")
+				sub(/\[[ ]*stopped[ ]*\]/,  "\033[31m&\033[0m")
+				sub(/\[[ ]*crashed[ ]*\]/,  "\033[33m&\033[0m")
+				sub(/\[[ ]*inactive[ ]*\]/, "\033[90m&\033[0m")
+				print
+			}
+		' |
+		sk --ansi \
+			--header='all services (green=started, red=stopped) — Esc to exit' \
 			--height=80% --reverse --no-mouse --prompt='> ' \
 			--preview='rc-service $(echo {} | awk "{print \$1}") status 2>&1' \
 			--preview-window=down:5 \
