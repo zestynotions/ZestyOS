@@ -1,0 +1,202 @@
+#!/bin/sh
+# zestyos_services — OpenRC service manager driven by skim fuzzy picker.
+#
+# Action menu picks runtime control (start/stop/restart/status) or runlevel
+# membership (add / del). Service picker shows a status preview pane and
+# annotates each service with the runlevels it already belongs to. Multi-
+# select via TAB; Esc to bail out at any step.
+
+set -eu
+
+INITD=/etc/init.d
+RUNLEVELS=/etc/runlevels
+
+command -v sk >/dev/null 2>&1 || {
+	echo "error: 'sk' (skim) is not installed — apk add skim" >&2
+	exit 1
+}
+command -v rc-service >/dev/null 2>&1 || {
+	echo "error: OpenRC ('rc-service') not found" >&2
+	exit 1
+}
+[ -d "$INITD" ] || {
+	echo "error: $INITD missing" >&2
+	exit 1
+}
+
+# Re-exec under doas so rc-service / rc-update can mutate state.
+if [ "$(id -u)" -ne 0 ]; then
+	exec doas "$0" "$@"
+fi
+
+# --- listings ---------------------------------------------------------------
+
+list_all_services() {
+	for f in "$INITD"/*; do
+		[ -f "$f" ] || continue
+		[ -x "$f" ] || continue
+		basename "$f"
+	done | sort -u
+}
+
+list_services_in_runlevel() {
+	dir="$RUNLEVELS/$1"
+	[ -d "$dir" ] || return 0
+	for f in "$dir"/*; do
+		[ -e "$f" ] || continue
+		basename "$f"
+	done | sort -u
+}
+
+list_services_not_in_runlevel() {
+	tmp=$(mktemp)
+	list_services_in_runlevel "$1" >"$tmp"
+	if [ -s "$tmp" ]; then
+		list_all_services | grep -vxF -f "$tmp" || true
+	else
+		list_all_services
+	fi
+	rm -f "$tmp"
+}
+
+list_runlevels() {
+	[ -d "$RUNLEVELS" ] || return 0
+	for d in "$RUNLEVELS"/*/; do
+		[ -d "$d" ] || continue
+		basename "$d"
+	done | sort -u
+}
+
+# Annotate each service name on stdin with the runlevels it lives in:
+#   <name><TAB>[default,boot]   or   <name><TAB>[-]
+annotate() {
+	show=$(rc-update show 2>/dev/null || true)
+	while IFS= read -r svc; do
+		[ -n "$svc" ] || continue
+		rls=$(printf '%s\n' "$show" | awk -v s="$svc" '
+			$1 == s {
+				out=""; pipe=0
+				for (i = 2; i <= NF; i++) {
+					if ($i == "|") { pipe = 1; continue }
+					if (pipe) out = (out ? out "," : "") $i
+				}
+				print (out == "" ? "-" : out)
+				exit
+			}
+		')
+		[ -n "$rls" ] || rls="-"
+		printf '%s\t[%s]\n' "$svc" "$rls"
+	done
+}
+
+# --- pickers ----------------------------------------------------------------
+
+pick_one() {
+	sk --header="$1" --height=60% --reverse --no-mouse --prompt='> '
+}
+
+# Multi-select picker over annotated service list. Emits one chosen name per
+# line (the [runlevels] column is for display only).
+pick_services() {
+	sk -m --header="$1" --height=60% --reverse --no-mouse --prompt='> ' \
+		--delimiter='	' --with-nth=1,2 \
+		--preview='rc-service {1} status 2>&1' \
+		--preview-window=down:5 |
+		cut -f1
+}
+
+# --- actions ----------------------------------------------------------------
+
+run_each() {
+	op="$1"
+	while IFS= read -r svc; do
+		[ -n "$svc" ] || continue
+		echo "==> rc-service $svc $op"
+		rc-service "$svc" "$op" || true
+	done
+}
+
+action_runtime() {
+	op="$1"
+	sel=$(list_all_services | annotate |
+		pick_services "rc-service $op  —  TAB multi-select, Enter run") || true
+	[ -n "$sel" ] || {
+		echo "no selection"
+		return 0
+	}
+	printf '%s\n' "$sel" | run_each "$op"
+}
+
+action_add() {
+	rl=$(list_runlevels | pick_one "ADD to which runlevel?") || true
+	[ -n "$rl" ] || {
+		echo "no runlevel"
+		return 0
+	}
+	sel=$(list_services_not_in_runlevel "$rl" | annotate |
+		pick_services "rc-update add  →  $rl") || true
+	[ -n "$sel" ] || {
+		echo "no selection"
+		return 0
+	}
+	printf '%s\n' "$sel" | while IFS= read -r svc; do
+		[ -n "$svc" ] || continue
+		echo "==> rc-update add $svc $rl"
+		rc-update add "$svc" "$rl" || true
+	done
+}
+
+action_del() {
+	rl=$(list_runlevels | pick_one "REMOVE from which runlevel?") || true
+	[ -n "$rl" ] || {
+		echo "no runlevel"
+		return 0
+	}
+	sel=$(list_services_in_runlevel "$rl" | annotate |
+		pick_services "rc-update del  ←  $rl") || true
+	[ -n "$sel" ] || {
+		echo "no selection"
+		return 0
+	}
+	printf '%s\n' "$sel" | while IFS= read -r svc; do
+		[ -n "$svc" ] || continue
+		echo "==> rc-update del $svc $rl"
+		rc-update del "$svc" "$rl" || true
+	done
+}
+
+action_show_all() {
+	rc-status --servicelist 2>/dev/null |
+		sk --header='all services (read-only — Esc to exit)' \
+			--height=80% --reverse --no-mouse --prompt='> ' \
+			--preview='rc-service $(echo {} | awk "{print \$1}") status 2>&1' \
+			--preview-window=down:5 \
+			>/dev/null || true
+}
+
+# --- main menu --------------------------------------------------------------
+
+action=$(printf '%s\n' \
+	status \
+	start \
+	stop \
+	restart \
+	'add to runlevel' \
+	'del from runlevel' \
+	'show all' |
+	pick_one 'zestyos_services — pick action') || true
+
+case "$action" in
+status | start | stop | restart) action_runtime "$action" ;;
+'add to runlevel') action_add ;;
+'del from runlevel') action_del ;;
+'show all') action_show_all ;;
+'')
+	echo "no action"
+	exit 0
+	;;
+*)
+	echo "unknown action: $action" >&2
+	exit 1
+	;;
+esac
